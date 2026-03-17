@@ -8,11 +8,12 @@ public class game {
 
     boolean player1_isX;
     boolean isPlayerVsPlayer;
-
+    boolean isPlayer1Turn;
     public game(){
         gameTypeQuery();
         moveTypeQuery();
         playerNamesQuery();
+        isPlayer1Turn = true;
     }
 
     private void gameTypeQuery() {
@@ -53,6 +54,56 @@ public class game {
             System.out.println("player 2 what is your name?");
             player2name = input.nextLine();
         }
+    }
+
+    public void start(){
+        System.out.println("----  Game Started  ----");
+
+
+        while(true) {
+            char moveType;
+            String name;
+            if(isPlayer1Turn){
+                moveType = player1_isX ? 'X' : 'O';
+                name = player1Name;
+            }
+            else{
+                moveType = player1_isX ? 'O' : 'X';
+                name = player2name;
+            }
+            isPlayer1Turn = !isPlayer1Turn;
+
+            System.out.printf("       %s's Turn \n",  name);
+            int[] moveResult = getMoves();
+            int x = moveResult[1];
+            int y = moveResult[0];
+            gameBoard.addMove(x, y, moveType);
+
+            gameBoard.printBoard();
+            System.out.println("\n\n");
+
+
+           //TODO this is just for testing but will result in an infinite loop for testing
+        }
+
+    }
+
+    private int[] getMoves(){
+        int x;
+        int y;
+        while(true){
+            System.out.println("please type your X cordinate in:");
+            x = input.nextInt();
+            if(x < 3 && x >= 0)break;
+            else  System.out.println("invalid number");
+        }
+        while(true){
+            System.out.println("please type your Y cordinate in:");
+            y = input.nextInt();
+            if(y < 3 && y >= 0)break;
+            else System.out.println("invalid number");
+        }
+        return new int[]{x, y};
     }
 
 }

@@ -26,7 +26,7 @@ public class board {
     }
 
     public boolean gameWon(char moveType){
-
+        //TODO come up with better way than this hard coded way
         //Verticle
          if(board[0][0] == moveType && board[1][0] == moveType && board[2][0] == moveType)return true;
          if(board[0][1] == moveType && board[1][1] == moveType && board[2][1] == moveType)return true;
