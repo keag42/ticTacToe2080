@@ -24,4 +24,23 @@ public class board {
     public void addMove(int row, int col, char moveType){
         board[row][col] = moveType;
     }
+
+    public boolean gameWon(char moveType){
+
+        //Verticle
+         if(board[0][0] == moveType && board[1][0] == moveType && board[2][0] == moveType)return true;
+         if(board[0][1] == moveType && board[1][1] == moveType && board[2][1] == moveType)return true;
+         if(board[0][2] == moveType && board[1][2] == moveType && board[2][2] == moveType) return true;
+
+         //Horizontal
+         if(board[0][0] == moveType && board[0][1] == moveType && board[0][2] == moveType)return true;
+         if(board[1][0] == moveType && board[1][1] == moveType && board[1][2] == moveType)return true;
+         if(board[2][0] == moveType && board[2][1] == moveType && board[2][2] == moveType)return true;
+
+         //diagonal
+         if(board[0][2] == moveType && board[1][1] == moveType && board[2][0] == moveType)return true;
+         if(board[0][0] == moveType && board[1][1] == moveType && board[2][2] == moveType)return true;
+
+         return false;
+    }
 }
