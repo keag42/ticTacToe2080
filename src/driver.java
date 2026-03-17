@@ -5,7 +5,6 @@ void main() throws IOException {
     //Scanner input = new Scanner(System.in);
 //    board a = new board();
 //
-//
 //    //how to use board
 //    System.out.println("before");
 //    a.printBoard();
@@ -16,10 +15,10 @@ void main() throws IOException {
 //
 //    System.out.println("\nAfter");
 //    a.printBoard();
-//
-    game thisGame = new game();
 
+
+//    how to use game interface
+    game thisGame = new game();
     thisGame.start();
-    //how to use game interface
 
 }

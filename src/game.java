@@ -83,7 +83,11 @@ public class game {
             System.out.println("\n\n");
 
 
-           //TODO this is just for testing but will result in an infinite loop for testing
+            if( gameBoard.gameWon(moveType) ){
+                System.out.println("--- GAME OVER ----");
+                System.out.println(name+" Won The Game.");
+                break;
+            }
         }
 
     }
