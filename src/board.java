@@ -1,6 +1,6 @@
 public class board {
     private char[][] board;
-
+    int movesPlaced;
     public board(){
         board = new char[3][3];
 
@@ -9,6 +9,7 @@ public class board {
                 board[i][j] = '-';
             }
         }
+        movesPlaced = 0;
     }
 
     public void printBoard(){
@@ -23,6 +24,21 @@ public class board {
 
     public void addMove(int row, int col, char moveType){
         board[row][col] = moveType;
+        movesPlaced++;
+    }
+
+    public coordinate[] possibleMoves(){
+        coordinate[] availableMoves = new coordinate[9-movesPlaced];
+        int moveCount = 0;
+        for(int y = 0; y < 3; y++){
+            for(int x = 0; x < 3; x++){
+                if(board[y][x] == '-'){
+                    availableMoves[moveCount++] = new coordinate(x, y);
+                }
+
+            }
+        }
+        return availableMoves;
     }
 
     public boolean gameWon(char moveType){
