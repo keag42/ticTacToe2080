@@ -135,111 +135,17 @@ public class game {
         return new coordinate(x, y);
     }
 
-    /*public int minimax(char[][] board, int depth, boolean isMax) {
-        int score = getScore();
-
-        if (score == 1) {
-            return score;
-        }
-
-        if (gameBoard.movesPlaced == 9) { //no winner game tied
-            return 0;
-        }
-
-        if (isMax) {
-            int best = -10;
-            for (int col = 0; col < 3; col++) {
-                for (int row = 0; row < 3; row++) {
-                    if (board[col][row] == emptyChar) {// if cell empty{
-                        // Make the move
-                        board[col][row] = player1_isX ? xChar : oChar;
-
-                        // Call minimax recursively and choose
-                        // the maximum value
-                        best = Math.max(best, minimax(board,
-                                depth + 1, !isMax));
-
-                        // Undo the move
-                        board[col][row] = emptyChar;
-                    }
-                }
-            }
-            return best;
-        }
-        else {
-            int best = 1000;
-
-            // Traverse all cells
-            for (int col = 0; col < 3; col++) {
-                for (int row = 0; row < 3; row++) {
-                    // Check if cell is empty
-                    if (board[col][row] == emptyChar) {
-                        // Make the move
-                        board[col][row] = board[col][row] = player1_isX ? oChar : xChar;
-
-                        // Call minimax recursively and choose
-                        // the minimum value
-                        best = Math.min(best, minimax(board,
-                                depth + 1, !isMax));
-
-                        // Undo the move
-                        board[col][row] = emptyChar;
-                    }
-                }
-            }
-            return best;
-        }
-    }
-    public coordinate minimaxWorker(char[][] board){
-        int bestValue = -10;
-        coordinate bestMove = new coordinate(-1, -1);
-
-        for(int col = 0; col < 3; col ++){
-            for(int row = 0; row < 3; row++){
-
-                if(board[col][row] == emptyChar){
-                    int moveValue = minimax(board, 0, false);
-                    board[col][row] = emptyChar;
-                    if(moveValue > bestValue){
-                        bestMove.x = col;
-                        bestMove.y = row;
-                        bestValue = moveValue;
-                    }
-                }
-            }
-        }
-        return bestMove;
-    }*/
-    public int getScore(){
-        char player = player1_isX ? xChar : oChar;
-        char ai = player1_isX ? oChar : xChar;
-        if(gameBoard.gameWon(player)){
-            return +1;
-        }
-        else if(gameBoard.gameWon(ai)){
-            return -1;
-        }
-        else{
-            return 0;
-        }
-    }
-
-    //TODO REMOVE AFTER TESTING
-
     public coordinate worker(char[][] board){
         int bestValue = Integer.MIN_VALUE;
         int[] bestMove = new int[2];
-        char emptyPiece = '-';
-        char oPiece = 'O';
-        char xPiece = 'X';
         char aiPiece = player1_isX ? oChar : xChar;
 
         for(int row = 0; row < 3; row++){
             for(int col = 0; col < 3; col++){
-                if(board[row][col] == emptyPiece){
+                if(board[row][col] == emptyChar){
                     board[row][col] = aiPiece;
                     int moveValue = minimax(board, 0, false);
-                    board[row][col] = emptyPiece;
+                    board[row][col] = emptyChar;
 
                     if(moveValue > bestValue){
                         bestMove[0] = row;
