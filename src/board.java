@@ -13,12 +13,18 @@ public class board {
         movesPlaced = 0;
     }
 
-    public boolean isTie(){
-        return movesPlaced == 9;
-    }
-
     public void printBoard(){
+        System.out.println("       X    ");
+        System.out.println("     0 1 2");
         for(int i = 0; i < board.length; i++){
+            if(i ==1){
+                System.out.print("Y " + i + ": ");
+
+            }
+            else{
+
+                System.out.print("  " + i + ": ");
+            }
             for(int j = 0; j < board.length; j++){
                 System.out.print(board[i][j] + " ");
             }
@@ -32,11 +38,7 @@ public class board {
         movesPlaced++;
         lastMove = new coordinate(x, y);
     }
-
-    public void removeLastMove(){
-        board[lastMove.y][lastMove.x] = '-';
-        movesPlaced--;
-    }
+/*
 
     public coordinate[] possibleMoves(){
         coordinate[] availableMoves = new coordinate[9-movesPlaced];
@@ -51,6 +53,7 @@ public class board {
         }
         return availableMoves;
     }
+*/
 
     public boolean gameWon(char moveType){
         //TODO come up with better way than this hard coded way
