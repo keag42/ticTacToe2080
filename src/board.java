@@ -17,14 +17,9 @@ public class board {
         System.out.println("       X    ");
         System.out.println("     0 1 2");
         for(int i = 0; i < board.length; i++){
-            if(i ==1){
-                System.out.print("Y " + i + ": ");
+            String topPrint = i == 1 ? "Y " + i + ": " : "  " + i + ": ";
+            System.out.print(topPrint);
 
-            }
-            else{
-
-                System.out.print("  " + i + ": ");
-            }
             for(int j = 0; j < board.length; j++){
                 System.out.print(board[i][j] + " ");
             }
