@@ -20,5 +20,4 @@ void main() throws IOException {
 //    how to use game interface
     game thisGame = new game();
     thisGame.start();
-
 }

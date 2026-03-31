@@ -1,6 +1,7 @@
 public class board {
-    private char[][] board;
-    int movesPlaced;
+    public char[][] board;
+    public int movesPlaced;
+    coordinate lastMove;
     public board(){
         board = new char[3][3];
 
@@ -12,6 +13,8 @@ public class board {
         movesPlaced = 0;
     }
 
+
+
     public void printBoard(){
         for(int i = 0; i < board.length; i++){
             for(int j = 0; j < board.length; j++){
@@ -22,9 +25,15 @@ public class board {
 
     }
 
-    public void addMove(int row, int col, char moveType){
-        board[row][col] = moveType;
+    public void addMove(int x, int y, char moveType){
+        board[y][x] = moveType;
         movesPlaced++;
+        lastMove = new coordinate(x, y);
+    }
+
+    public void removeLastMove(){
+        board[lastMove.y][lastMove.x] = '-';
+        movesPlaced--;
     }
 
     public coordinate[] possibleMoves(){
