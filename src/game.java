@@ -9,6 +9,11 @@ public class game {
     boolean player1_isX;
     boolean isPlayerVsPlayer;
     boolean isPlayer1Turn;
+    
+    char xChar = 'X';
+    char oChar = 'O';
+    char emptyChar = '-';
+    
     public game(){
         gameTypeQuery();
         moveTypeQuery();
@@ -66,18 +71,19 @@ public class game {
             char moveType;
             String name;
             if(isPlayer1Turn){
-                moveType = player1_isX ? 'X' : 'O';
+                moveType = player1_isX ? xChar : oChar;
                 name = player1Name;
             }
             else{
-                moveType = player1_isX ? 'O' : 'X';
+                moveType = player1_isX ? oChar : xChar;
                 name = player2name;
             }
 
 
             System.out.printf("       %s's Turn \n",  name);
             if(!isPlayerVsPlayer && !isPlayer1Turn){
-                coordinate bestMove = minimaxWorker(gameBoard.board);
+//                coordinate bestMove = minimaxWorker(gameBoard.board);
+                coordinate bestMove = worker(gameBoard.board);
                 System.out.println("\u001B[41m" + "ai's idea: x: " + bestMove.x+ ", y: " +bestMove.y + ". move type: " + moveType + "\u001B[0m");
                 gameBoard.addMove(bestMove.x, bestMove.y, moveType);
             }
@@ -115,11 +121,11 @@ public class game {
             y = input.nextInt();
 
 
-            if(y > 2 && y < 0 || x > 2 && x < 0) {
+            if(y > 2 || y < 0 || x > 2 || x < 0) {
                 System.out.println("invalid number, must be between 0-2 inclusive.");
                 continue;
             }
-            else if(gameBoard.board[y][x] != '-'){
+            else if(gameBoard.board[x][y] != emptyChar){
                 System.out.println("there is already a piece there. try a different spot.");
                 continue;
             }
@@ -129,7 +135,7 @@ public class game {
         return new coordinate(x, y);
     }
 
-    public int minimax(char[][] board, int depth, boolean isMax) {
+    /*public int minimax(char[][] board, int depth, boolean isMax) {
         int score = getScore();
 
         if (score == 1) {
@@ -144,9 +150,9 @@ public class game {
             int best = -10;
             for (int col = 0; col < 3; col++) {
                 for (int row = 0; row < 3; row++) {
-                    if (board[col][row] == '_') {// if cell empty{
+                    if (board[col][row] == emptyChar) {// if cell empty{
                         // Make the move
-                        board[col][row] = player1_isX ? 'X' : 'O';
+                        board[col][row] = player1_isX ? xChar : oChar;
 
                         // Call minimax recursively and choose
                         // the maximum value
@@ -154,7 +160,7 @@ public class game {
                                 depth + 1, !isMax));
 
                         // Undo the move
-                        board[col][row] = '_';
+                        board[col][row] = emptyChar;
                     }
                 }
             }
@@ -164,12 +170,12 @@ public class game {
             int best = 1000;
 
             // Traverse all cells
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
+            for (int col = 0; col < 3; col++) {
+                for (int row = 0; row < 3; row++) {
                     // Check if cell is empty
-                    if (board[i][j] == '_') {
+                    if (board[col][row] == emptyChar) {
                         // Make the move
-                        board[i][j] = board[i][j] = player1_isX ? 'O' : 'X';;
+                        board[col][row] = board[col][row] = player1_isX ? oChar : xChar;
 
                         // Call minimax recursively and choose
                         // the minimum value
@@ -177,7 +183,7 @@ public class game {
                                 depth + 1, !isMax));
 
                         // Undo the move
-                        board[i][j] = '_';
+                        board[col][row] = emptyChar;
                     }
                 }
             }
@@ -191,10 +197,9 @@ public class game {
         for(int col = 0; col < 3; col ++){
             for(int row = 0; row < 3; row++){
 
-                if(board[col][row] == '-'){
+                if(board[col][row] == emptyChar){
                     int moveValue = minimax(board, 0, false);
-                    System.out.println("piece: " + board[col][row]); //todo remove this is only for testing
-                    board[col][row] = '-';
+                    board[col][row] = emptyChar;
                     if(moveValue > bestValue){
                         bestMove.x = col;
                         bestMove.y = row;
@@ -204,10 +209,10 @@ public class game {
             }
         }
         return bestMove;
-    }
+    }*/
     public int getScore(){
-        char player = player1_isX ? 'X' : 'O';
-        char ai = player1_isX ? 'O' : 'X';
+        char player = player1_isX ? xChar : oChar;
+        char ai = player1_isX ? oChar : xChar;
         if(gameBoard.gameWon(player)){
             return +1;
         }
@@ -218,24 +223,120 @@ public class game {
             return 0;
         }
     }
-/*    public void minimaxWorker(){
-        coordinate[] freeMoves = gameBoard.possibleMoves();
-        //the bot will be O for now
-        for(coordinate cord: freeMoves){
-//            System.out.println("for move, x:" + cord.x +", y:" +cord.y);
 
-            gameBoard.addMove(cord.x, cord.y, 'X');
-            if(gameBoard.gameWon('X')){
-                System.out.println("X can win by playing: X:" + cord.x + ", O: " + cord.y);
-                System.out.println("WINNENR ");
-            }
-            gameBoard.removeLastMove();
+    //TODO REMOVE AFTER TESTING
 
-            gameBoard.addMove(cord.x, cord.y, 'O');
-            if(gameBoard.gameWon('O')){
-                System.out.println("O can win by playing: X:" + cord.x + ", O: " + cord.y);
+    public coordinate worker(char[][] board){
+        int bestValue = Integer.MIN_VALUE;
+        int[] bestMove = new int[2];
+        char emptyPiece = '-';
+        char oPiece = 'O';
+        char xPiece = 'X';
+        char aiPiece = player1_isX ? oChar : xChar;
+
+        for(int row = 0; row < 3; row++){
+            for(int col = 0; col < 3; col++){
+                if(board[row][col] == emptyPiece){
+                    board[row][col] = aiPiece;
+                    int moveValue = minimax(board, 0, false);
+                    board[row][col] = emptyPiece;
+
+                    if(moveValue > bestValue){
+                        bestMove[0] = row;
+                        bestMove[1] = col;
+                        bestValue = moveValue;
+                    }
+                }
             }
-            gameBoard.removeLastMove();
         }
-    }*/
+        return new coordinate(bestMove[0], bestMove[1]);
+    }
+
+    public int minimax(char[][] board, int depth, boolean isMax) {
+        char aiPiece = player1_isX ? oChar : xChar;
+        char humanPiece = player1_isX ? xChar : oChar;
+
+        int  boardValue = evaluateGame(board);
+
+
+        if(boardValue == 10 ) return 10 - depth;
+        if(boardValue == -10) return depth - 10;
+
+        boolean movesLeft = false;
+        for(int row = 0; row < 3; row++){
+            for(int col = 0; col < 3; col++){
+                if(board[row][col] == emptyChar){
+                    movesLeft = true;
+                    break;
+                }
+            }
+            if(movesLeft) break;
+        }
+
+        if(!movesLeft){
+            return 0; // tie
+        }
+
+        if(isMax){ //max will be O
+            int highestValue = Integer.MIN_VALUE;
+            for(int row = 0; row < board.length; row++){
+                for(int col = 0; col < board[0].length; col++){
+                    if(board[row][col] == emptyChar){
+                        board[row][col] = aiPiece; // place piece for recursive testing
+                        highestValue = Math.max(highestValue, minimax(board, depth+1, false)); //call recursion
+                        board[row][col] = emptyChar; //remove piece
+                    }
+                }
+            }
+            return highestValue;
+        }
+        else{
+            int lowestValue = Integer.MAX_VALUE;
+            for(int row = 0; row < board.length; row++){
+                for(int col = 0; col < board[0].length; col++){
+                    if(board[row][col] == emptyChar){
+                        board[row][col] = humanPiece;
+                        lowestValue = Math.min(lowestValue, minimax(board, depth+1, true));
+                        board[row][col] = emptyChar;
+                    }
+                }
+            }
+            return lowestValue;
+        }
+
+    }
+
+    public int evaluateGame(char[][] board){
+        // todo redo this with loop onces confirmed working
+        char ai = player1_isX ? oChar : xChar;
+        char plater = player1_isX ? xChar : oChar;
+
+        // Rows
+        if(board[0][0] == ai && board[0][1] == ai && board[0][2] == ai) return 10;
+        if(board[1][0] == ai && board[1][1] == ai && board[1][2] == ai) return 10;
+        if(board[2][0] == ai && board[2][1] == ai && board[2][2] == ai) return 10;
+
+        if(board[0][0] == plater && board[0][1] == plater && board[0][2] == plater) return -10;
+        if(board[1][0] == plater && board[1][1] == plater && board[1][2] == plater) return -10;
+        if(board[2][0] == plater && board[2][1] == plater && board[2][2] == plater) return -10;
+
+        // Columns
+        if(board[0][0] == ai && board[1][0] == ai && board[2][0] == ai) return 10;
+        if(board[0][1] == ai && board[1][1] == ai && board[2][1] == ai) return 10;
+        if(board[0][2] == ai && board[1][2] == ai && board[2][2] == ai) return 10;
+
+        if(board[0][0] == plater && board[1][0] == plater && board[2][0] == plater) return -10;
+        if(board[0][1] == plater && board[1][1] == plater && board[2][1] == plater) return -10;
+        if(board[0][2] == plater && board[1][2] == plater && board[2][2] == plater) return -10;
+
+        // Diagonals
+        if(board[0][0] == ai && board[1][1] == ai && board[2][2] == ai) return 10;
+        if(board[0][0] == plater && board[1][1] == plater && board[2][2] == plater) return -10;
+
+        if(board[0][2] == ai && board[1][1] == ai && board[2][0] == ai) return 10;
+        if(board[0][2] == plater && board[1][1] == plater && board[2][0] == plater) return -10;
+
+        return 0;
+    }
+
 }

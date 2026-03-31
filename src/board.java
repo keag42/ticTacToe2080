@@ -13,12 +13,14 @@ public class board {
         movesPlaced = 0;
     }
 
-
+    public boolean isTie(){
+        return movesPlaced == 9;
+    }
 
     public void printBoard(){
         for(int i = 0; i < board.length; i++){
             for(int j = 0; j < board.length; j++){
-                System.out.print(board[i][j]  +" ");
+                System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }
@@ -26,7 +28,7 @@ public class board {
     }
 
     public void addMove(int x, int y, char moveType){
-        board[y][x] = moveType;
+        board[x][y] = moveType;
         movesPlaced++;
         lastMove = new coordinate(x, y);
     }
