@@ -38,22 +38,6 @@ public class board {
         movesPlaced++;
         lastMove = new coordinate(x, y);
     }
-/*
-
-    public coordinate[] possibleMoves(){
-        coordinate[] availableMoves = new coordinate[9-movesPlaced];
-        int moveCount = 0;
-        for(int y = 0; y < 3; y++){
-            for(int x = 0; x < 3; x++){
-                if(board[y][x] == '-'){
-                    availableMoves[moveCount++] = new coordinate(x, y);
-                }
-
-            }
-        }
-        return availableMoves;
-    }
-*/
 
     public boolean gameWon(char moveType){
         //TODO come up with better way than this hard coded way
