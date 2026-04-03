@@ -103,8 +103,12 @@ public class game {
 
             if( gameBoard.gameWon(moveType) ){
                 System.out.println("--- GAME OVER ----");
-                System.out.println(name+" Won The Game.");
+                System.out.println(name + " Won The Game.");
                 break;
+            }
+            if(gameBoard.gameTied()){
+                System.out.println("--- GAME OVER ----");
+                System.out.println("This game ended in a tie.");
             }
             isPlayer1Turn = !isPlayer1Turn;
         }

@@ -2,6 +2,7 @@ public class board {
     public char[][] board;
     public int movesPlaced;
     coordinate lastMove;
+
     public board(){
         board = new char[3][3];
 
@@ -26,6 +27,9 @@ public class board {
             System.out.println();
         }
 
+    }
+    public boolean gameTied(){
+        return movesPlaced == 9;
     }
 
     public void addMove(int x, int y, char moveType){
