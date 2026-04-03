@@ -3,12 +3,12 @@
     O'Neal Jean: 101544778
     Caio Cotts: 101571045
 */
-public class board {
+public class Board {
     public char[][] board;
     public int movesPlaced;
-    coordinate lastMove;
+    Coordinate lastMove;
 
-    public board(){
+    public Board(){
         board = new char[3][3];
 
         for(int i = 0; i < board.length; i++){
@@ -40,7 +40,7 @@ public class board {
     public void addMove(int x, int y, char moveType){
         board[x][y] = moveType;
         movesPlaced++;
-        lastMove = new coordinate(x, y);
+        lastMove = new Coordinate(x, y);
     }
 
     public boolean gameWon(char moveType){

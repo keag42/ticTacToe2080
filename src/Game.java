@@ -5,9 +5,9 @@
 */
 import java.util.Scanner;
 
-public class game {
+public class Game {
     Scanner input = new Scanner(System.in);
-    board gameBoard = new board();
+    Board gameBoard = new Board();
     String player1Name;
     String player2name;
 
@@ -19,7 +19,7 @@ public class game {
     char oChar = 'O';
     char emptyChar = '-';
     
-    public game(){
+    public Game(){
         gameTypeQuery();
         moveTypeQuery();
         playerNamesQuery();
@@ -89,12 +89,12 @@ public class game {
 
             System.out.printf("       %s's Turn \n",  name);
             if(!isPlayerVsPlayer && !isPlayer1Turn){
-                coordinate bestMove = Ai.minimaxWorker(gameBoard.board, player1_isX);
+                Coordinate bestMove = Ai.minimaxWorker(gameBoard.board, player1_isX);
                // System.out.println("\u001B[41m" + "ai's idea: x: " + bestMove.x+ ", y: " +bestMove.y + ". move type: " + moveType + "\u001B[0m");
                 gameBoard.addMove(bestMove.x, bestMove.y, moveType);
             }
             else{
-                coordinate moveResult = getMoves();
+                Coordinate moveResult = getMoves();
                 int x = moveResult.x;
                 int y = moveResult.y;
                 gameBoard.addMove(x, y, moveType);
@@ -122,7 +122,7 @@ public class game {
 
     }
 
-    private coordinate getMoves(){
+    private Coordinate getMoves(){
         int x;
         int y;
         while(true){
@@ -143,7 +143,7 @@ public class game {
             break;
 
         }
-        return new coordinate(x, y);
+        return new Coordinate(x, y);
     }
 
 //    public coordinate minimaxWorker(char[][] board){

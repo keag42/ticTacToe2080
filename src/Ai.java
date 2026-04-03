@@ -2,8 +2,8 @@ public class Ai {
     static char oChar = 'O';
     static char xChar = 'X';
     static char emptyChar = '-';
-    boolean player1_isX;
-    public static coordinate minimaxWorker(char[][] board, boolean player1_isX){
+
+    public static Coordinate minimaxWorker(char[][] board, boolean player1_isX){
         int bestValue = Integer.MIN_VALUE;
         int[] bestMove = new int[2];
         char aiPiece = player1_isX ? oChar : xChar;
@@ -23,7 +23,7 @@ public class Ai {
                 }
             }
         }
-        return new coordinate(bestMove[0], bestMove[1]);
+        return new Coordinate(bestMove[0], bestMove[1]);
     }
 
     private static int minimax(char[][] board, int depth, boolean isMax, boolean player1_isX) {

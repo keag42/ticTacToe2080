@@ -4,7 +4,7 @@
     Caio Cotts: 101571045
 */
 void main()  {
-    game thisGame = new game();
+    Game thisGame = new Game();
     thisGame.start();
 }
 
