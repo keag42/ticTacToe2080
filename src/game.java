@@ -66,6 +66,8 @@ public class game {
     public void start(){
         System.out.println("----  Game Started  ----");
 
+        gameBoard.printBoard();
+        isPlayer1Turn = player1_isX;
 
         while(true) {
             char moveType;
@@ -82,9 +84,8 @@ public class game {
 
             System.out.printf("       %s's Turn \n",  name);
             if(!isPlayerVsPlayer && !isPlayer1Turn){
-//                coordinate bestMove = minimaxWorker(gameBoard.board);
-                coordinate bestMove = worker(gameBoard.board);
-                System.out.println("\u001B[41m" + "ai's idea: x: " + bestMove.x+ ", y: " +bestMove.y + ". move type: " + moveType + "\u001B[0m");
+                coordinate bestMove = minimaxWorker(gameBoard.board);
+               // System.out.println("\u001B[41m" + "ai's idea: x: " + bestMove.x+ ", y: " +bestMove.y + ". move type: " + moveType + "\u001B[0m");
                 gameBoard.addMove(bestMove.x, bestMove.y, moveType);
             }
             else{
@@ -109,6 +110,7 @@ public class game {
             if(gameBoard.gameTied()){
                 System.out.println("--- GAME OVER ----");
                 System.out.println("This game ended in a tie.");
+                break;
             }
             isPlayer1Turn = !isPlayer1Turn;
         }
@@ -139,7 +141,7 @@ public class game {
         return new coordinate(x, y);
     }
 
-    public coordinate worker(char[][] board){
+    public coordinate minimaxWorker(char[][] board){
         int bestValue = Integer.MIN_VALUE;
         int[] bestMove = new int[2];
         char aiPiece = player1_isX ? oChar : xChar;
